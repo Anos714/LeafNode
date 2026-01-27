@@ -1,16 +1,26 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "leafnode-backend",
+  "version": "0.1.0",
+  "description": "Backend API for LeafNode — a MERN stack notes application inspired by nature and simplicity.",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "leafnode",
+    "notes-app",
+    "mern",
+    "backend",
+    "nodejs",
+    "express",
+    "mongodb",
+    "jwt-auth",
+    "rest-api"
+  ],
+  "author": "Rahul Sain <sainrahul374@gmail.com>",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
