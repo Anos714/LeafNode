@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { connectToDB } from "./database/database";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -27,6 +28,12 @@ app.use("/ping", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running at PORT: ${PORT}`);
-});
+connectToDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running at PORT: ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    throw new Error(error);
+  });
