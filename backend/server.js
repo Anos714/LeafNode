@@ -2,7 +2,9 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { connectToDB } from "./database/database";
+import { connectToDB } from "./database/database.js";
+import { errorHandler } from "./utils/error-handler/errorHandler.js";
+import { authRouter } from "./routes/auth.route.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -27,6 +29,10 @@ app.use("/ping", (req, res) => {
     msg: "pong",
   });
 });
+
+app.use("/api/auth", authRouter);
+
+app.use(errorHandler);
 
 connectToDB()
   .then(() => {
