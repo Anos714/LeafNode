@@ -5,7 +5,7 @@ export const registerLimiter = rateLimit({
   max: 3,
   message: {
     success: false,
-    msg: "Too many login attempts. Try again after 1 hour",
+    msg: "Too many register attempts. Try again after 1 hour",
   },
   standardHeaders: true,
   legacyHeaders: false,
