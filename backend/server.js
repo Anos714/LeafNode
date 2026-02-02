@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { connectToDB } from "./database/database.js";
 import { errorHandler } from "./utils/error-handler/errorHandler.js";
 import { authRouter } from "./routes/auth.route.js";
+import { isAuthenticated } from "./middlewares/isAuth.middleware.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -23,10 +24,11 @@ app.use(
 
 //routes
 //test route
-app.use("/ping", (req, res) => {
+app.use("/ping", isAuthenticated, (req, res) => {
   res.status(200).json({
     success: true,
     msg: "pong",
+    user: req.user,
   });
 });
 
