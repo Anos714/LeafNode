@@ -6,6 +6,7 @@ import { connectToDB } from "./database/database.js";
 import { errorHandler } from "./utils/error-handler/errorHandler.js";
 import { authRouter } from "./routes/auth.route.js";
 import { isAuthenticated } from "./middlewares/isAuth.middleware.js";
+import { noteRouter } from "./routes/note.route.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -33,6 +34,7 @@ app.use("/ping", isAuthenticated, (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/notes", noteRouter);
 
 app.use(errorHandler);
 
