@@ -1,5 +1,5 @@
 import { Note } from "../models/Note.model.js";
-import { noteSchema } from "../validations/note.js";
+import { noteSchema, patchedNoteSchema } from "../validations/note.js";
 
 export const getAllNotes = async (req, res, next) => {
   try {
@@ -79,6 +79,33 @@ export const addNote = async (req, res, next) => {
 
 export const updateNoteById = async (req, res, next) => {
   try {
+    const { id } = req.params;
+    const { error, value } = patchedNoteSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        msg: error.details[0].message,
+      });
+    }
+
+    const updatedNote = await Note.findOneAndUpdate(
+      { _id: id, owner: req.user._id },
+      value,
+      { new: true, runValidators: true },
+    );
+
+    if (!updatedNote) {
+      return res.status(404).json({
+        success: false,
+        msg: "Note not found or you don't have permission",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Note updated successfully",
+      data: updatedNote,
+    });
   } catch (error) {
     next(error);
   }

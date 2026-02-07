@@ -13,6 +13,17 @@ export const noteSchema = joi
   })
   .unknown(false);
 
+export const patchedNoteSchema = joi.object({
+  title: joi.string().max(120).trim(),
+  content: joi.string(),
+
+  isPinned: joi.boolean().default(false),
+
+  tags: joi.array().items(joi.string().hex().length(24)),
+
+  folder: joi.string().hex().length(24).allow(null),
+});
+
 export const tagSchema = joi
   .object({
     name: joi.string().trim().required(),
