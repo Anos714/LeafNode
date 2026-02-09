@@ -113,6 +113,22 @@ export const updateNoteById = async (req, res, next) => {
 
 export const deleteNoteById = async (req, res, next) => {
   try {
+    const { id } = req.params;
+    const deletedNote = await Note.findOneAndDelete({
+      _id: id,
+      owner: req.user._id,
+    });
+    if (!deletedNote) {
+      return res.status(404).json({
+        success: false,
+        msg: "Note not found or you don't have permission",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      msg: "Note deleted successfully",
+      data: deletedNote,
+    });
   } catch (error) {
     next(error);
   }
